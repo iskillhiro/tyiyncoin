@@ -5,7 +5,7 @@ function Author() {
 		<div className={style.author}>
 			<img className={style.author_img} src='/tap.png' alt='auhtor' />
 			<h2 className={style.author_name}>@rustamovrahman</h2>
-			<Link to={'@rustamovrahman'} className={style.gradient_btn}>
+			<Link to={' https://t.me/rustamovrahman'} className={style.gradient_btn}>
 				Связаться
 			</Link>
 		</div>
