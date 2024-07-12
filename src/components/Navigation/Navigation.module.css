@@ -1,0 +1,38 @@
+.navigation {
+	display: flex;
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	justify-content: space-between;
+	align-items: center;
+	width: 90%;
+	bottom: 0;
+	height: 90px;
+	z-index: 999;
+}
+.nav_elem {
+	position: relative;
+	cursor: pointer;
+	height: 100%;
+	border-right: 2px solid var(--borderColor);
+	padding-bottom: 20px;
+	padding: 0 4%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+.gradient_btn {
+	border-radius: var(--radius);
+	padding: var(--blockPadding) calc(var(--blockPadding) * 2);
+	font-size: 90%;
+	width: 30%;
+	text-decoration: none;
+	font-weight: 700;
+	color: white;
+	box-shadow: 0px 0px 5px #1db5ff;
+	background: linear-gradient(84.52deg, #1eb6ff 35.3%, #00ffff 100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

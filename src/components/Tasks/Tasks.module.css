@@ -1,0 +1,39 @@
+.title {
+	text-align: center;
+	text-wrap: nowrap;
+	width: 100%;
+	font-size: 7vw;
+	color: white;
+}
+.tasksList {
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	max-height: 80%;
+	margin-top: 5%;
+	gap: 20px;
+}
+
+.task {
+	border: 1px solid #ccc;
+	padding: 15px;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	text-decoration: none;
+}
+.task:link,
+.task:visited,
+.task:hover,
+.task:active {
+	text-decoration: none;
+	color: inherit;
+}
+.taskTitle {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.taskReward {
+	font-size: 16px;
+	color: #555;
+}

@@ -1,0 +1,13 @@
+.counter {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-20%);
+	width: 100%;
+	text-align: center;
+	color: white;
+}
+.count {
+	font-weight: 700;
+	font-size: 10vw;
+}

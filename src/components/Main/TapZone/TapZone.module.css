@@ -1,0 +1,25 @@
+.tap_zone {
+	position: absolute;
+	width: 250px;
+	cursor: pointer;
+	height: 250px;
+	border: 2px solid white;
+	border-radius: 50%;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	transition: box-shadow linear 0.01s, border-color linear 0.01s;
+}
+.tap_img:active {
+	transform: scale(110%);
+}
+.tap_zone:active {
+	border-color: gold;
+	box-shadow: 0px 0px 15px gold;
+}
+.tap_img {
+	transition: transform linear 0.01s;
+	transform: scale(100%);
+	width: 100%;
+	height: 100%;
+}
