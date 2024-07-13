@@ -46,7 +46,34 @@
 .tap_img {
 	transition: transform linear 0.01s;
 	transform: scale(100%);
-	width: 100%;
 	border-radius: 50%;
-	height: 100%;
+	width: 100%;
+	height: auto;
+}
+.tap_number {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	color: white;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 8vw;
+	font-weight: 700;
+	pointer-events: none;
+	animation: flyUp 1s ease-out forwards;
+	opacity: 1;
+}
+
+@keyframes flyUp {
+	0% {
+		transform: translate(-50%, -50%) translateY(0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(-50%, -50%) translateY(-100px);
+		opacity: 0;
+	}
 }
