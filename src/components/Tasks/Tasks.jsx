@@ -1,6 +1,7 @@
 import Navigation from '../Navigation/Navigation'
 import Task from './Task'
 import style from './Tasks.module.css'
+const tg = window.Telegram.WebApp
 
 function Tasks() {
 	const tasks = [
@@ -9,8 +10,14 @@ function Tasks() {
 			link: 'https://t.me/tyiyncoin',
 			reward: '1 монета',
 		},
+		{
+			title: 'Приведи 3 друзей',
+			link: 'https://t.me/share/',
+			reward: '3 монеты',
+		},
 	]
-
+	const backButton = tg.BackButton
+	backButton.show()
 	return (
 		<div className='container'>
 			<h1 className={style.title}>Задания</h1>

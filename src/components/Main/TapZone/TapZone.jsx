@@ -11,7 +11,7 @@ const TapZone = () => {
 
 	return (
 		<div onClick={feedback} className={style.tap_zone}>
-			<img className={style.tap_img} src='/tap.png' alt='tap' />
+			<img className={style.tap_img} src='/tap.jpeg' alt='tap' />
 		</div>
 	)
 }

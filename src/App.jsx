@@ -14,7 +14,7 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Main />} />
-				<Route path='/tasks' element={<Tasks />} />
+				<Route path='/bonus' element={<Tasks />} />
 				<Route path='/get' element={<Get />} />
 			</Routes>
 		</BrowserRouter>

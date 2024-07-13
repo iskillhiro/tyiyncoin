@@ -1,12 +1,17 @@
 import Navigation from '../Navigation/Navigation'
-import Counter from './Counter/Counter'
-import style from './Main.module.css'
+import Count from './Count/Count'
+import Energy from './Energy/Energy'
+import Level from './Level/Level'
 import TapZone from './TapZone/TapZone'
+const tg = window.Telegram.WebApp
 function Main() {
+	const backButton = tg.BackButton
+	backButton.hide()
 	return (
 		<div className='container'>
-			<h1 className={style.title}>Майнинг TyiynCoin</h1>
-			<Counter />
+			<Count />
+			<Level />
+			<Energy />
 			<TapZone />
 			<Navigation />
 		</div>
