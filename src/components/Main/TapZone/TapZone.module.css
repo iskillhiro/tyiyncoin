@@ -10,51 +10,43 @@
 	transform: translate(-50%, -50%);
 	transition: box-shadow linear 0.01s, border-color linear 0.01s;
 	background-color: transparent;
+	z-index: 999;
 }
 
-.tap_zone::after {
-	content: '';
+.white {
 	position: absolute;
-	width: 140%;
-	height: 140%;
+	width: 130%;
+	height: 130%;
 	border-radius: 50%;
 	filter: blur(10px);
-	z-index: -2;
 	background-color: rgba(255, 255, 255, 0.641);
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	transition: all ease 0.1s;
-	pointer-events: none; /* Добавляем это свойство */
+	pointer-events: none;
+	transition: transform 0.1s ease-out;
+	z-index: -2;
 }
 
-.tap_zone::before {
-	content: '';
+.black {
 	position: absolute;
 	width: 110%;
 	height: 110%;
 	border-radius: 50%;
-	z-index: -1;
 	filter: blur(10px);
 	background-color: rgba(0, 0, 0, 0.486);
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	pointer-events: none; /* Добавляем это свойство */
-	transition: all ease 0.1s;
+	pointer-events: none;
+	transition: transform 0.1s ease-out;
+	z-index: -1;
 }
 
 .tap_img:active {
 	transform: scale(1.02);
 }
-.tap_zone:active::after {
-	width: 145%;
-	height: 145%;
-}
-.tap_zone:active::before {
-	width: 115%;
-	height: 115%;
-}
+
 .tap_img {
 	transition: transform linear 0.01s;
 	transform: scale(1);
@@ -92,4 +84,13 @@
 		transform: translate(-50%, -50%) translateY(-100px);
 		opacity: 0;
 	}
+}
+
+.tap_zone:active .black {
+	width: 120%;
+	height: 120%;
+}
+.tap_zone:active .white {
+	width: 135%;
+	height: 135%;
 }
