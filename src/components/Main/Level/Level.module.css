@@ -1,0 +1,35 @@
+.counter {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	top: 18%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-20%);
+	width: 100%;
+	text-align: center;
+	color: white;
+}
+.count {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--gap);
+	font-weight: 700;
+	font-size: 5vw;
+	width: fit-content;
+}
+.count::after {
+	content: '';
+	background-image: url('../../../../public/arrow.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 15px;
+	width: 15px;
+	position: absolute;
+	right: -15px;
+}
+.count img {
+	width: 10%;
+}
