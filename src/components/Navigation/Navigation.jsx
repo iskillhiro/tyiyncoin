@@ -1,12 +1,7 @@
 import { Link } from 'react-router-dom'
 import style from './Navigation.module.css'
 
-const tg = window.Telegram.WebApp
-
 const Navigation = () => {
-	const backButton = tg.BackButton
-	backButton.show()
-
 	return (
 		<div className={style.navigation}>
 			<Link to='/bonus' className={style.link}>

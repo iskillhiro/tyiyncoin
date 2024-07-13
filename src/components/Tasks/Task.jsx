@@ -4,7 +4,10 @@ function Task({ title, link, reward }) {
 	return (
 		<Link to={link} className={style.task}>
 			<h3 className={style.taskTitle}>{title}</h3>
-			<p className={style.taskReward}>Награда: {reward}</p>
+			<p className={style.taskReward}>
+				+{reward}
+				<img src='./coin.svg' alt='' />
+			</p>
 		</Link>
 	)
 }

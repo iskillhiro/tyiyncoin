@@ -15,11 +15,16 @@
 }
 
 .task {
-	border: 1px solid #ccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	padding: 15px;
 	border-radius: 8px;
-	background-color: #f9f9f9;
+	background-color: #343434;
 	text-decoration: none;
+}
+.task img {
+	width: 40px;
 }
 .task:link,
 .task:visited,
@@ -30,10 +35,15 @@
 }
 .taskTitle {
 	font-size: 18px;
+	color: white;
+	font-weight: 400;
 	margin-bottom: 10px;
 }
 
 .taskReward {
-	font-size: 16px;
-	color: #555;
+	display: flex;
+	align-items: center;
+	font-size: 1.5em;
+	color: white;
+	width: 20%;
 }

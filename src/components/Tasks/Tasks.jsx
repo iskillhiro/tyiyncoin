@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import Navigation from '../Navigation/Navigation'
 import Task from './Task'
 import style from './Tasks.module.css'
@@ -8,15 +9,21 @@ function Tasks() {
 		{
 			title: 'Подпишись на канал',
 			link: 'https://t.me/tyiyncoin',
-			reward: '1 монета',
+			reward: '1',
 		},
 		{
 			title: 'Приведи 3 друзей',
 			link: 'https://t.me/share/',
-			reward: '3 монеты',
+			reward: '3',
 		},
 	]
+	const navigate = useNavigate()
 	const backButton = tg.BackButton
+
+	backButton.onClick(() => {
+		navigate('/')
+	})
+
 	backButton.show()
 	return (
 		<div className='container'>
