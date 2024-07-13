@@ -46,7 +46,7 @@ const TapZone = () => {
 					className={style.tap_number}
 					style={{ top: tap.y, left: tap.x }}
 				>
-					1
+					+1
 				</span>
 			))}
 		</div>
