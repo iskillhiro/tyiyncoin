@@ -39,8 +39,6 @@ const TapZone = () => {
 
 	return (
 		<div onTouchStart={feedback} className={style.tap_zone}>
-			<div className={style.black}></div>
-			<div className={style.white}></div>
 			<img className={style.tap_img} src='/tap.jpeg' alt='tap' />
 			{taps.map(tap => (
 				<span
@@ -51,6 +49,8 @@ const TapZone = () => {
 					+1
 				</span>
 			))}
+			<div className={style.black}></div>
+			<div className={style.white}></div>
 		</div>
 	)
 }

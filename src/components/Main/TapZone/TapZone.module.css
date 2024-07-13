@@ -86,13 +86,3 @@
 		opacity: 0;
 	}
 }
-
-.tap_zone:active .black {
-	width: 120%;
-	height: 120%;
-}
-
-.tap_zone:active .white {
-	width: 135%;
-	height: 135%;
-}
