@@ -10,6 +10,7 @@
 	transform: translateX(-50%) translateY(-50%);
 	transition: box-shadow linear 0.01s, border-color linear 0.01s;
 }
+
 .tap_zone::after {
 	content: '';
 	position: absolute;
@@ -23,6 +24,7 @@
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
 }
+
 .tap_zone::before {
 	content: '';
 	position: absolute;
@@ -36,13 +38,11 @@
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
 }
+
 .tap_img:active {
-	transform: scale(103%);
+	transform: scale(102%);
 }
-.tap_zone:active {
-	border-color: gold;
-	box-shadow: 0px 0px 15px gold;
-}
+
 .tap_img {
 	transition: transform linear 0.01s;
 	transform: scale(100%);
@@ -50,6 +50,7 @@
 	width: 100%;
 	height: auto;
 }
+
 .tap_number {
 	position: absolute;
 	transform: translate(-50%, -50%);
@@ -60,7 +61,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 8vw;
+	font-size: 10vw;
 	font-weight: 700;
 	pointer-events: none;
 	animation: flyUp 1s ease-out forwards;
