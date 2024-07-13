@@ -11,6 +11,7 @@
 	transition: box-shadow linear 0.01s, border-color linear 0.01s;
 	background-color: transparent;
 	z-index: 999;
+	overflow: hidden; /* Добавлено чтобы предотвратить выход элементов за границы */
 }
 
 .white {
@@ -90,6 +91,7 @@
 	width: 120%;
 	height: 120%;
 }
+
 .tap_zone:active .white {
 	width: 135%;
 	height: 135%;
