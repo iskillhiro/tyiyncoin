@@ -7,9 +7,10 @@
 	border-radius: 50%;
 	top: 50%;
 	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
+	transform: translate(-50%, -50%);
 	transition: box-shadow linear 0.01s, border-color linear 0.01s;
 	background-color: transparent;
+	overflow: hidden; /* Добавлено */
 }
 
 .tap_zone::after {
@@ -23,7 +24,7 @@
 	background-color: rgba(255, 255, 255, 0.641);
 	left: 50%;
 	top: 50%;
-	transform: translateX(-50%) translateY(-50%);
+	transform: translate(-50%, -50%);
 	pointer-events: none; /* Добавляем это свойство */
 }
 
@@ -38,17 +39,17 @@
 	background-color: rgba(0, 0, 0, 0.486);
 	left: 50%;
 	top: 50%;
-	transform: translateX(-50%) translateY(-50%);
+	transform: translate(-50%, -50%);
 	pointer-events: none; /* Добавляем это свойство */
 }
 
 .tap_img:active {
-	transform: scale(102%);
+	transform: scale(1.02);
 }
 
 .tap_img {
 	transition: transform linear 0.01s;
-	transform: scale(100%);
+	transform: scale(1);
 	background-color: transparent;
 	border-radius: 50%;
 	width: 100%;
@@ -60,8 +61,8 @@
 	transform: translate(-50%, -50%);
 	color: white;
 	border-radius: 50%;
-	width: 20px;
-	height: 20px;
+	width: auto;
+	height: auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
