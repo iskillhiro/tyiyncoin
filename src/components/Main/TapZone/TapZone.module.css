@@ -24,7 +24,24 @@
 	left: 50%;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
+	pointer-events: none; /* Добавляем это свойство */
 }
+
+.tap_zone::before {
+	content: '';
+	position: absolute;
+	width: 120%;
+	height: 120%;
+	border-radius: 50%;
+	z-index: -1;
+	filter: blur(10px);
+	background-color: rgba(0, 0, 0, 0.486);
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	pointer-events: none; /* Добавляем это свойство */
+}
+
 .tap_img:active {
 	transform: scale(102%);
 }
