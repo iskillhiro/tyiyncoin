@@ -9,6 +9,7 @@
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
 	transition: box-shadow linear 0.01s, border-color linear 0.01s;
+	background-color: transparent;
 }
 
 .tap_zone::after {
@@ -46,6 +47,7 @@
 .tap_img {
 	transition: transform linear 0.01s;
 	transform: scale(100%);
+	background-color: transparent;
 	border-radius: 50%;
 	width: 100%;
 	height: auto;
