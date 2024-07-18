@@ -50,7 +50,7 @@ function Main() {
 			<Count currentCoins={currentCoins} />
 			<GetBonus userData={userData} />
 			<Level userData={userData} />
-			<Energy currentEnergy={currentEnergy} />
+			<Energy currentEnergy={currentEnergy} maxEnergy={userData.maxEnergy} />
 			<TapZone
 				userData={userData}
 				setCurrentCoins={setCurrentCoins}
