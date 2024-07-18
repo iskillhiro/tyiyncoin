@@ -55,6 +55,7 @@ function Main() {
 				userData={userData}
 				setCurrentCoins={setCurrentCoins}
 				setCurrentEnergy={setCurrentEnergy}
+				currentEnergy={currentEnergy}
 			/>
 			<Navigation />
 		</div>
