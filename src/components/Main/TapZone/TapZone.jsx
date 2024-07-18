@@ -75,7 +75,7 @@ const TapZone = ({ userData, setCurrentEnergy, setCurrentCoins }) => {
 						className={style.tap_number}
 						style={{ top: `${tap.y}px`, left: `${tap.x}px` }}
 					>
-						+0.01
+						+1
 					</span>
 				))}
 			</div>
