@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axiosDB from '../../../utils/axiosDB'
 import style from './TapZone.module.css'
 
 const tg = window.Telegram.WebApp
@@ -12,24 +13,24 @@ const TapZone = ({
 	const [taps, setTaps] = useState([])
 
 	const feedback = async event => {
+		event.persist() // Сохраняем объект события
+		console.log('feedback function called') // Debug log
+
+		try {
+			const response = await axiosDB.put(`/user/tap/`, {
+				telegramId: userData.telegramId,
+			})
+			console.log('API response:', response.data) // Debug log
+
+			// Обновляем состояние после успешного ответа
+			setCurrentEnergy(response.data.energy)
+			setCurrentCoins(response.data.coins)
+		} catch (error) {
+			console.error('Error updating user:', error)
+			// Optional: rollback changes or show an error message to the user
+		}
+
 		if (currentEnergy > 0) {
-			event.persist() // Сохраняем объект события
-			console.log('feedback function called') // Debug log
-
-			try {
-				const response = await axiosDB.put(`/user/tap/`, {
-					telegramId: userData.telegramId,
-				})
-				console.log('API response:', response.data) // Debug log
-
-				// Обновляем состояние после успешного ответа
-				setCurrentEnergy(response.data.energy)
-				setCurrentCoins(response.data.coins)
-			} catch (error) {
-				console.error('Error updating user:', error)
-				// Optional: rollback changes or show an error message to the user
-			}
-
 			if (tg.HapticFeedback) {
 				tg.HapticFeedback.impactOccurred('light')
 			}
@@ -56,11 +57,10 @@ const TapZone = ({
 
 				newTaps.push(newTap)
 			}
-
 			setTaps(prevTaps => [...prevTaps, ...newTaps])
 			console.log('Updated taps:', taps) // Debug log for taps state
-
 			// Удаляем касания после завершения анимации (1 секунда)
+
 			setTimeout(() => {
 				setTaps(prevTaps =>
 					prevTaps.filter(tap => !newTaps.some(newTap => newTap.id === tap.id))
