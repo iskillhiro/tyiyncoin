@@ -1,10 +1,10 @@
 import style from './Count.module.css'
-const Count = () => {
+const Count = ({ currentCoins }) => {
 	return (
 		<div className={style.counter}>
 			<div className={style.count}>
 				<img src='/coin.svg' alt='' />
-				1.03
+				{currentCoins}
 			</div>
 		</div>
 	)

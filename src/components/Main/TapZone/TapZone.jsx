@@ -1,35 +1,61 @@
 import { useState } from 'react'
+import axiosDB from '../../../utils/axiosDB'
 import style from './TapZone.module.css'
 
 const tg = window.Telegram.WebApp
 
-const TapZone = () => {
+const TapZone = ({ userData, setCurrentEnergy, setCurrentCoins }) => {
 	const [taps, setTaps] = useState([])
 
-	const feedback = event => {
+	const feedback = async event => {
+		event.persist() // Сохраняем объект события
+		console.log('feedback function called') // Debug log
+
+		try {
+			const response = await axiosDB.put(`/user/tap/`, {
+				telegramId: userData.telegramId,
+			})
+			console.log('API response:', response.data) // Debug log
+
+			// Обновляем состояние после успешного ответа
+			setCurrentEnergy(response.data.energy)
+			setCurrentCoins(response.data.coins)
+		} catch (error) {
+			console.error('Error updating user:', error)
+			// Optional: rollback changes or show an error message to the user
+		}
+
 		if (tg.HapticFeedback) {
 			tg.HapticFeedback.impactOccurred('light')
 		}
 
 		const newTaps = []
 
-		// Loop through touches (fingers) on the screen
+		// Проходим по всем касаниям (пальцам) на экране
 		for (let i = 0; i < event.touches.length; i++) {
 			const { clientX, clientY } = event.touches[i]
-			const rect = event.currentTarget.getBoundingClientRect()
+			const rect = event.target.getBoundingClientRect()
+
+			if (!rect) {
+				console.error('Unable to get bounding rect')
+				continue
+			}
 
 			const newTap = {
-				id: Date.now() + i, // Ensure unique ID
+				id: Date.now() + i, // Уникальный ID
 				x: clientX - rect.left,
 				y: clientY - rect.top,
 			}
+
+			console.log(`New tap: ${JSON.stringify(newTap)}`) // Debug log for new tap position
 
 			newTaps.push(newTap)
 		}
 
 		setTaps(prevTaps => [...prevTaps, ...newTaps])
+		console.log('Updated taps:', taps) // Debug log for taps state
 
-		// Remove the taps after the animation ends (1 second)
+		// Удаляем касания после завершения анимации (1 секунда)
 		setTimeout(() => {
 			setTaps(prevTaps =>
 				prevTaps.filter(tap => !newTaps.some(newTap => newTap.id === tap.id))
@@ -47,7 +73,7 @@ const TapZone = () => {
 					<span
 						key={tap.id}
 						className={style.tap_number}
-						style={{ top: tap.y, left: tap.x }}
+						style={{ top: `${tap.y}px`, left: `${tap.x}px` }}
 					>
 						+1
 					</span>
