@@ -24,8 +24,8 @@ const TapZone = ({
 			console.log('API response:', response.data) // Debug log
 
 			// Обновляем состояние после успешного ответа
-			setCurrentEnergy(currentEnergy + taps)
-			setCurrentCoins(currentCoins + taps)
+			setCurrentEnergy(response.data.energy)
+			setCurrentCoins(response.data.coins)
 		} catch (error) {
 			console.error('Error updating user:', error)
 			// Optional: rollback changes or show an error message to the user
