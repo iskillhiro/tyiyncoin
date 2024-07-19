@@ -11,8 +11,7 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 		const updateTimer = () => {
 			const now = new Date()
 			const bonusTime = new Date(userData.bonusClaimed)
-			const futureDate = new Date(bonusTime)
-			futureDate.setHours(futureDate.getHours() + 5) // Предполагаем, что время на клиенте уже скорректировано на 5 часов
+			const futureDate = new Date(bonusTime.getTime() + 5 * 60 * 60 * 1000) // Добавляем 5 часов в миллисекундах
 			const remainingTime = futureDate - now
 
 			if (remainingTime > 0) {
