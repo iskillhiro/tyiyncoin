@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axiosDB from '../../../utils/axiosDB'
 import style from './GetBonus.module.css'
 
-function GetBonus({ userData }) {
+function GetBonus({ userData, setCurrentCoins, setBonusClaimed }) {
 	const [timeRemaining, setTimeRemaining] = useState(null)
 	const [isBonusAvailable, setIsBonusAvailable] = useState(true)
 
@@ -23,15 +23,18 @@ function GetBonus({ userData }) {
 			}
 
 			updateTimer()
-			const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
+			const timer = setInterval(updateTimer, 1000) // Update every second
 
-			return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
+			return () => clearInterval(timer) // Clear interval on component unmount
 		}
 	}, [userData.bonusClaimed])
 
 	const getBonus = async () => {
 		try {
-			await axiosDB.get(`/bonus/${userData.telegramId}`)
+			const response = await axiosDB.get(`/bonus/${userData.telegramId}`)
+			const { coins, bonusClaimed } = response.data
+			setCurrentCoins(coins)
+			setBonusClaimed(bonusClaimed)
 		} catch (error) {
 			console.error('Error getting bonus:', error)
 		}
