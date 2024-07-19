@@ -5,6 +5,7 @@ import Count from './Count/Count'
 import Energy from './Energy/Energy'
 import GetBonus from './GetBonus/GetBonus'
 import Level from './Level/Level'
+import LoadingScreen from './LoadingScreen/LoadingScreen'
 import TapZone from './TapZone/TapZone'
 
 const tg = window.Telegram.WebApp
@@ -36,7 +37,7 @@ function Main() {
 	}, [])
 
 	if (!userData) {
-		return <div>Loading...</div>
+		return <LoadingScreen />
 	}
 
 	console.log('Rendering TapZone with props:', {
