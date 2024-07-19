@@ -7,26 +7,27 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 	const [isBonusAvailable, setIsBonusAvailable] = useState(true)
 
 	useEffect(() => {
-		let timer
-		if (timeRemaining !== null) {
+		if (userData.bonusClaimed) {
 			const updateTimer = () => {
 				const now = new Date()
-				const futureDate = new Date(localStorage.getItem('bonusExpiry'))
-				const remainingTime = futureDate - now
-				setTimeRemaining(Math.max(remainingTime, 0))
+				const bonusTime = new Date(userData.bonusClaimed)
+				const remainingTime = bonusTime - now
 
-				if (remainingTime <= 0) {
-					clearInterval(timer)
+				if (remainingTime > 0) {
+					setIsBonusAvailable(false)
+					setTimeRemaining(remainingTime)
+				} else {
 					setIsBonusAvailable(true)
 					setTimeRemaining(null)
-					localStorage.removeItem('bonusExpiry')
 				}
 			}
+
 			updateTimer()
-			timer = setInterval(updateTimer, 1000) // Update every second
+			const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
+
+			return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
 		}
-		return () => clearInterval(timer) // Clear interval on unmount
-	}, [timeRemaining])
+	}, [userData.bonusClaimed])
 
 	const getBonus = async () => {
 		try {
@@ -34,12 +35,17 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 				setCurrentEnergy(currentEnergy + 99)
 				setIsBonusAvailable(false)
 				await axiosDB.get(`/bonus/${userData.telegramId}`)
+				const updateTimer = () => {
+					const now = new Date()
+					const futureDate = new Date(now)
+					futureDate.setHours(futureDate.getHours() + 5)
+					const remainingTime = futureDate - now
+					setTimeRemaining(remainingTime)
+				}
+				updateTimer()
+				const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
 
-				const futureDate = new Date()
-				futureDate.setHours(futureDate.getHours() + 5)
-				localStorage.setItem('bonusExpiry', futureDate.toISOString())
-
-				setTimeRemaining(futureDate - new Date())
+				return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
 			}
 		} catch (error) {
 			console.error('Error getting bonus:', error)
@@ -47,7 +53,7 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 	}
 
 	const formatTime = milliseconds => {
-		const totalSeconds = Math.floor(milliseconds / 1000)
+		const totalSeconds = Math.max(Math.floor(milliseconds / 1000), 0)
 		const hours = Math.floor(totalSeconds / 3600)
 		const minutes = Math.floor((totalSeconds % 3600) / 60)
 		const seconds = totalSeconds % 60
