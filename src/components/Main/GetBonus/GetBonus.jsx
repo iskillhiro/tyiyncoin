@@ -41,27 +41,25 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 				setIsBonusAvailable(false)
 				await axiosDB.get(`/bonus/${userData.telegramId}`)
 
-				const futureDate = new Date()
-				futureDate.setHours(futureDate.getHours() + 5)
-				setTimeRemaining(futureDate - new Date())
+				// Запускаем фейковый таймер на 5 часов
+				const fakeTimerDuration = 5 * 60 * 60 * 1000
+				setTimeRemaining(fakeTimerDuration)
 
-				const updateTimer = () => {
-					const now = new Date()
-					const remainingTime = futureDate - now
-					setTimeRemaining(Math.max(remainingTime, 0))
-
-					if (remainingTime <= 0) {
-						setIsBonusAvailable(true)
-						setTimeRemaining(null)
-						clearInterval(timerRef.current)
-					}
+				const updateFakeTimer = () => {
+					setTimeRemaining(prev => {
+						const newRemainingTime = Math.max(prev - 1000, 0)
+						if (newRemainingTime === 0) {
+							setIsBonusAvailable(true)
+							clearInterval(timerRef.current)
+						}
+						return newRemainingTime
+					})
 				}
 
-				updateTimer()
 				if (timerRef.current) {
 					clearInterval(timerRef.current)
 				}
-				timerRef.current = setInterval(updateTimer, 1000)
+				timerRef.current = setInterval(updateFakeTimer, 1000)
 			}
 		} catch (error) {
 			console.error('Error getting bonus:', error)
