@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import axiosDB from '../../../utils/axiosDB'
 import style from './GetBonus.module.css'
 
 function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 	const [timeRemaining, setTimeRemaining] = useState(null)
 	const [isBonusAvailable, setIsBonusAvailable] = useState(true)
+	const timerRef = useRef(null) // Use useRef to keep track of the timer
 
 	useEffect(() => {
 		const updateTimer = () => {
@@ -25,9 +26,12 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 
 		if (userData.bonusClaimed) {
 			updateTimer()
-			const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
+			if (timerRef.current) {
+				clearInterval(timerRef.current) // Clear existing interval if any
+			}
+			timerRef.current = setInterval(updateTimer, 1000) // Update every second
 
-			return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
+			return () => clearInterval(timerRef.current) // Clear interval on component unmount
 		}
 	}, [userData.bonusClaimed])
 
@@ -50,13 +54,15 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 					if (remainingTime <= 0) {
 						setIsBonusAvailable(true)
 						setTimeRemaining(null)
+						clearInterval(timerRef.current) // Clear interval when time is up
 					}
 				}
 
 				updateTimer()
-				const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
-
-				return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
+				if (timerRef.current) {
+					clearInterval(timerRef.current) // Clear existing interval if any
+				}
+				timerRef.current = setInterval(updateTimer, 1000) // Update every second
 			}
 		} catch (error) {
 			console.error('Error getting bonus:', error)
