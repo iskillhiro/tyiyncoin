@@ -13,7 +13,6 @@ function Main() {
 	const [userData, setUserData] = useState(null)
 	const backButton = tg.BackButton
 	const [currentEnergy, setCurrentEnergy] = useState(0)
-	const [currentCoins, setCurrentCoins] = useState(0)
 	backButton.hide()
 
 	useEffect(() => {
@@ -24,7 +23,6 @@ function Main() {
 				const userInfo = response.data
 				setUserData(userInfo)
 				setCurrentEnergy(userInfo.energy)
-				setCurrentCoins(userInfo.coins)
 			} catch (error) {
 				console.error('Error fetching user data:', error)
 			}
@@ -46,17 +44,17 @@ function Main() {
 
 	return (
 		<div className='container'>
-			<Count currentCoins={currentCoins} />
+			<Count currentCoins={userData.coins} />
 			<GetBonus
 				userData={userData}
-				setCurrentCoins={setCurrentCoins}
+				setCurrentEnergy={setCurrentEnergy}
 				setBonusClaimed={setBonusClaimed}
 			/>
 			<Level userData={userData} />
 			<Energy currentEnergy={currentEnergy} maxEnergy={userData.maxEnergy} />
 			<TapZone
 				userData={userData}
-				setCurrentCoins={setCurrentCoins}
+				setCurrentCoins={() => {}}
 				setCurrentEnergy={setCurrentEnergy}
 				currentEnergy={currentEnergy}
 			/>
