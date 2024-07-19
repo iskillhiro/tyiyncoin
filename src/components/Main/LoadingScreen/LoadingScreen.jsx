@@ -31,7 +31,7 @@ function LoadingScreen() {
 				<img
 					className={styles.loadingImage}
 					alt='Loading...'
-					src='/public/tap.jpeg'
+					src='/tap.jpeg'
 				></img>
 			)}
 		</div>
