@@ -5,14 +5,14 @@ import style from './GetBonus.module.css'
 function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 	const [timeRemaining, setTimeRemaining] = useState(null)
 	const [isBonusAvailable, setIsBonusAvailable] = useState(true)
-	const timerRef = useRef(null) // Use useRef to keep track of the timer
+	const timerRef = useRef(null)
 
 	useEffect(() => {
 		const updateTimer = () => {
 			const now = new Date()
 			const bonusTime = new Date(userData.bonusClaimed)
 			const futureDate = new Date(bonusTime)
-			futureDate.setHours(futureDate.getHours() + 5)
+			futureDate.setHours(futureDate.getHours() + 5) // Предполагаем, что время на клиенте уже скорректировано на 5 часов
 			const remainingTime = futureDate - now
 
 			if (remainingTime > 0) {
@@ -27,11 +27,11 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 		if (userData.bonusClaimed) {
 			updateTimer()
 			if (timerRef.current) {
-				clearInterval(timerRef.current) // Clear existing interval if any
+				clearInterval(timerRef.current)
 			}
-			timerRef.current = setInterval(updateTimer, 1000) // Update every second
+			timerRef.current = setInterval(updateTimer, 1000)
 
-			return () => clearInterval(timerRef.current) // Clear interval on component unmount
+			return () => clearInterval(timerRef.current)
 		}
 	}, [userData.bonusClaimed])
 
@@ -54,15 +54,15 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 					if (remainingTime <= 0) {
 						setIsBonusAvailable(true)
 						setTimeRemaining(null)
-						clearInterval(timerRef.current) // Clear interval when time is up
+						clearInterval(timerRef.current)
 					}
 				}
 
 				updateTimer()
 				if (timerRef.current) {
-					clearInterval(timerRef.current) // Clear existing interval if any
+					clearInterval(timerRef.current)
 				}
-				timerRef.current = setInterval(updateTimer, 1000) // Update every second
+				timerRef.current = setInterval(updateTimer, 1000)
 			}
 		} catch (error) {
 			console.error('Error getting bonus:', error)
