@@ -29,10 +29,8 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 		}
 	}, [userData.bonusClaimed])
 
-	const getBonus = async () => {
-		try {
-			await axiosDB.get(`/bonus/${userData.telegramId}`)
-
+	useEffect(() => {
+		if (!isBonusAvailable) {
 			const updateTimer = () => {
 				const now = new Date()
 				const futureDate = new Date(now)
@@ -40,13 +38,20 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 				const remainingTime = futureDate - now
 				setTimeRemaining(remainingTime)
 			}
-			setIsBonusAvailable(false)
-			setCurrentEnergy(currentEnergy + 99)
 
 			updateTimer()
 			const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
 
 			return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
+		}
+	}, [isBonusAvailable])
+
+	const getBonus = async () => {
+		try {
+			await axiosDB.get(`/bonus/${userData.telegramId}`)
+
+			setIsBonusAvailable(false)
+			setCurrentEnergy(currentEnergy + 99)
 		} catch (error) {
 			console.error('Error getting bonus:', error)
 		}
