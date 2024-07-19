@@ -14,36 +14,31 @@ const TapZone = ({
 	const [taps, setTaps] = useState([])
 
 	const feedback = async event => {
-		event.persist()
-		console.log('feedback function called')
+		event.persist() // Сохраняем объект события
+		console.log('feedback function called') // Debug log
+
+		try {
+			const response = await axiosDB.put(`/user/tap/`, {
+				telegramId: userData.telegramId,
+			})
+			console.log('API response:', response.data) // Debug log
+
+			// Обновляем состояние после успешного ответа
+			setCurrentEnergy(response.data.energy)
+			setCurrentCoins(response.data.coins)
+		} catch (error) {
+			console.error('Error updating user:', error)
+			// Optional: rollback changes or show an error message to the user
+		}
 
 		if (currentEnergy > 0) {
-			// Оптимистичное обновление данных
-			setCurrentEnergy(prevEnergy => prevEnergy - 1)
-			setCurrentCoins(prevCoins => prevCoins + 1)
-
-			try {
-				const response = await axiosDB.put(`/user/tap/`, {
-					telegramId: userData.telegramId,
-				})
-				console.log('API response:', response.data)
-
-				// Обновляем состояние после успешного ответа
-				setCurrentEnergy(response.data.energy)
-				setCurrentCoins(response.data.coins)
-			} catch (error) {
-				console.error('Error updating user:', error)
-				// Откат изменений в случае ошибки
-				setCurrentEnergy(prevEnergy => prevEnergy + 1)
-				setCurrentCoins(prevCoins => prevCoins - 1)
-			}
-
 			if (tg.HapticFeedback) {
 				tg.HapticFeedback.impactOccurred('light')
 			}
 
 			const newTaps = []
 
+			// Проходим по всем касаниям (пальцам) на экране
 			for (let i = 0; i < event.touches.length; i++) {
 				const { clientX, clientY } = event.touches[i]
 				const rect = event.target.getBoundingClientRect()
@@ -54,7 +49,7 @@ const TapZone = ({
 				}
 
 				const newTap = {
-					id: Date.now() + i,
+					id: Date.now() + i, // Уникальный ID
 					x: clientX - rect.left,
 					y: clientY - rect.top,
 				}
