@@ -23,9 +23,9 @@ function GetBonus({ userData, setCurrentEnergy, setBonusClaimed }) {
 			}
 
 			updateTimer()
-			const timer = setInterval(updateTimer, 1000) // Update every second
+			const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
 
-			return () => clearInterval(timer) // Clear interval on component unmount
+			return () => clearInterval(timer) // Очистка интервала при размонтировании компонента
 		}
 	}, [userData.bonusClaimed])
 

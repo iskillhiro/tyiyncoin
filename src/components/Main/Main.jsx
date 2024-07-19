@@ -13,16 +13,19 @@ function Main() {
 	const [userData, setUserData] = useState(null)
 	const backButton = tg.BackButton
 	const [currentEnergy, setCurrentEnergy] = useState(0)
+	const [currentCoins, setCurrentCoins] = useState(0)
 	backButton.hide()
 
 	useEffect(() => {
 		const getUserData = async () => {
 			try {
 				const telegramId = tg.initDataUnsafe.user.id
+
 				const response = await axiosDB.get(`/user/${telegramId}`)
 				const userInfo = response.data
 				setUserData(userInfo)
 				setCurrentEnergy(userInfo.energy)
+				setCurrentCoins(userInfo.coins)
 			} catch (error) {
 				console.error('Error fetching user data:', error)
 			}
@@ -44,7 +47,7 @@ function Main() {
 
 	return (
 		<div className='container'>
-			<Count currentCoins={userData.coins} />
+			<Count currentCoins={currentCoins} />
 			<GetBonus
 				userData={userData}
 				setCurrentEnergy={setCurrentEnergy}
@@ -54,7 +57,7 @@ function Main() {
 			<Energy currentEnergy={currentEnergy} maxEnergy={userData.maxEnergy} />
 			<TapZone
 				userData={userData}
-				setCurrentCoins={() => {}}
+				setCurrentCoins={setCurrentCoins}
 				setCurrentEnergy={setCurrentEnergy}
 				currentEnergy={currentEnergy}
 			/>
