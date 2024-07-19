@@ -12,17 +12,17 @@ const tg = window.Telegram.WebApp
 
 function Main() {
 	const [userData, setUserData] = useState(null)
-	const backButton = tg.BackButton
 	const [currentEnergy, setCurrentEnergy] = useState(0)
 	const [currentCoins, setCurrentCoins] = useState(0)
+	const [loading, setLoading] = useState(true) // Состояние для загрузки данных
+
+	const backButton = tg.BackButton
 	backButton.hide()
 
 	useEffect(() => {
 		const getUserData = async () => {
 			try {
-				// Получаем telegramId из объекта initData
 				const telegramId = tg.initDataUnsafe.user.id
-
 				const response = await axiosDB.get(`/user/${telegramId}`)
 				const userInfo = response.data
 				setUserData(userInfo)
@@ -30,14 +30,16 @@ function Main() {
 				setCurrentCoins(userInfo.coins)
 			} catch (error) {
 				console.error('Error fetching user data:', error)
+			} finally {
+				setLoading(false) // Устанавливаем состояние загрузки в false, когда данные получены
 			}
 		}
 
 		getUserData()
 	}, [])
 
-	if (!userData) {
-		return <LoadingScreen />
+	if (loading) {
+		return <LoadingScreen /> // Показываем экран загрузки
 	}
 
 	console.log('Rendering TapZone with props:', {
