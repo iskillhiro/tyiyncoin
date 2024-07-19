@@ -28,7 +28,11 @@ function LoadingScreen() {
 					className={styles.loadingImage}
 				/>
 			) : (
-				<img className={styles.loadingImage} src='/public/tap.jpeg'></img>
+				<img
+					className={styles.loadingImage}
+					alt='Loading...'
+					src='/public/tap.jpeg'
+				></img>
 			)}
 		</div>
 	)
