@@ -7,21 +7,23 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 	const [isBonusAvailable, setIsBonusAvailable] = useState(true)
 
 	useEffect(() => {
-		if (userData.bonusClaimed) {
-			const updateTimer = () => {
-				const now = new Date()
-				const bonusTime = new Date(userData.bonusClaimed)
-				const remainingTime = bonusTime - now
+		const updateTimer = () => {
+			const now = new Date()
+			const bonusTime = new Date(userData.bonusClaimed)
+			const futureDate = new Date(bonusTime)
+			futureDate.setHours(futureDate.getHours() + 5)
+			const remainingTime = futureDate - now
 
-				if (remainingTime > 0) {
-					setIsBonusAvailable(false)
-					setTimeRemaining(remainingTime)
-				} else {
-					setIsBonusAvailable(true)
-					setTimeRemaining(null)
-				}
+			if (remainingTime > 0) {
+				setIsBonusAvailable(false)
+				setTimeRemaining(remainingTime)
+			} else {
+				setIsBonusAvailable(true)
+				setTimeRemaining(null)
 			}
+		}
 
+		if (userData.bonusClaimed) {
 			updateTimer()
 			const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
 
@@ -35,13 +37,22 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 				setCurrentEnergy(currentEnergy + 99)
 				setIsBonusAvailable(false)
 				await axiosDB.get(`/bonus/${userData.telegramId}`)
+
+				const futureDate = new Date()
+				futureDate.setHours(futureDate.getHours() + 5)
+				setTimeRemaining(futureDate - new Date())
+
 				const updateTimer = () => {
 					const now = new Date()
-					const futureDate = new Date(now)
-					futureDate.setHours(futureDate.getHours() + 5)
 					const remainingTime = futureDate - now
-					setTimeRemaining(remainingTime)
+					setTimeRemaining(Math.max(remainingTime, 0))
+
+					if (remainingTime <= 0) {
+						setIsBonusAvailable(true)
+						setTimeRemaining(null)
+					}
 				}
+
 				updateTimer()
 				const timer = setInterval(updateTimer, 1000) // Обновляем каждую секунду
 
@@ -72,7 +83,7 @@ function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 				</div>
 			) : (
 				<div className={style.timerText}>
-					{timeRemaining ? formatTime(timeRemaining) : '00:00:00'}
+					{timeRemaining ? formatTime(timeRemaining) : ''}
 				</div>
 			)}
 		</div>
