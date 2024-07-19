@@ -9,6 +9,7 @@ const TapZone = ({
 	setCurrentEnergy,
 	setCurrentCoins,
 	currentEnergy,
+	currentCoins,
 }) => {
 	const [taps, setTaps] = useState([])
 
@@ -23,8 +24,8 @@ const TapZone = ({
 			console.log('API response:', response.data) // Debug log
 
 			// Обновляем состояние после успешного ответа
-			setCurrentEnergy(response.data.energy)
-			setCurrentCoins(response.data.coins)
+			setCurrentEnergy(currentEnergy + taps)
+			setCurrentCoins(currentCoins + taps)
 		} catch (error) {
 			console.error('Error updating user:', error)
 			// Optional: rollback changes or show an error message to the user
@@ -53,13 +54,9 @@ const TapZone = ({
 					y: clientY - rect.top,
 				}
 
-				console.log(`New tap: ${JSON.stringify(newTap)}`) // Debug log for new tap position
-
 				newTaps.push(newTap)
 			}
 			setTaps(prevTaps => [...prevTaps, ...newTaps])
-			console.log('Updated taps:', taps) // Debug log for taps state
-			// Удаляем касания после завершения анимации (1 секунда)
 
 			setTimeout(() => {
 				setTaps(prevTaps =>
