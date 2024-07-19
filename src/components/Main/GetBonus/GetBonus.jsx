@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axiosDB from '../../../utils/axiosDB'
 import style from './GetBonus.module.css'
 
-function GetBonus({ userData, setCurrentEnergy, setBonusClaimed }) {
+function GetBonus({ userData, setCurrentEnergy, currentEnergy }) {
 	const [timeRemaining, setTimeRemaining] = useState(null)
 	const [isBonusAvailable, setIsBonusAvailable] = useState(true)
 
@@ -31,10 +31,14 @@ function GetBonus({ userData, setCurrentEnergy, setBonusClaimed }) {
 
 	const getBonus = async () => {
 		try {
-			const response = await axiosDB.get(`/bonus/${userData.telegramId}`)
-			const { energy, bonusClaimed } = response.data
-			setCurrentEnergy(energy)
-			setBonusClaimed(bonusClaimed)
+			await axiosDB.get(`/bonus/${userData.telegramId}`)
+			const now = new Date()
+			const futureDate = new Date(now)
+			futureDate.setHours(futureDate.getHours() + 5)
+			const remainingTime = futureDate - now
+			setTimeRemaining(remainingTime)
+			setIsBonusAvailable(false)
+			setCurrentEnergy(currentEnergy + 99)
 		} catch (error) {
 			console.error('Error getting bonus:', error)
 		}

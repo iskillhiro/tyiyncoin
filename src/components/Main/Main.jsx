@@ -19,6 +19,7 @@ function Main() {
 	useEffect(() => {
 		const getUserData = async () => {
 			try {
+				// Получаем telegramId из объекта initData
 				const telegramId = tg.initDataUnsafe.user.id
 
 				const response = await axiosDB.get(`/user/${telegramId}`)
@@ -34,24 +35,23 @@ function Main() {
 		getUserData()
 	}, [])
 
-	const setBonusClaimed = bonusClaimed => {
-		setUserData(prevState => ({
-			...prevState,
-			bonusClaimed: bonusClaimed,
-		}))
-	}
-
 	if (!userData) {
 		return <div>Loading...</div>
 	}
+
+	console.log('Rendering TapZone with props:', {
+		userData,
+		setCurrentCoins,
+		setCurrentEnergy,
+	})
 
 	return (
 		<div className='container'>
 			<Count currentCoins={currentCoins} />
 			<GetBonus
 				userData={userData}
+				currentEnergy={currentEnergy}
 				setCurrentEnergy={setCurrentEnergy}
-				setBonusClaimed={setBonusClaimed}
 			/>
 			<Level userData={userData} />
 			<Energy currentEnergy={currentEnergy} maxEnergy={userData.maxEnergy} />
